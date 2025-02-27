@@ -1,4 +1,4 @@
-package PageObject;
+package pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -60,5 +60,6 @@ public class ForWhomSamokat {
     //Клик на кнопку "Далее"
     public void clickNext(){
         driver.findElement(nextButton).click();
+
     }
 }

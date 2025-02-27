@@ -1,14 +1,13 @@
-package ChromeTests;
+package tests;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import PageObject.*;
+
+import pageobject.*;
 
 
     @RunWith(Parameterized.class)
-    public class TestFirstOrderButtonChrome {
+    public class TestFirstOrderButton extends BaseTest {
         private final String name;
         private final String lastName;
         private final String address;
@@ -20,9 +19,10 @@ import PageObject.*;
         private final String courierComment;
         private final String successWordOrderPlacing;
 
-        public TestFirstOrderButtonChrome(String name, String lastName, String address, String metroStation,
-                                          String phoneNumber, String date, String rentTerm,
-                                          String color, String courierComment, String successWordOrderPlacing) {
+        public TestFirstOrderButton(String browser, String name, String lastName, String address, String metroStation,
+                                    String phoneNumber, String date, String rentTerm,
+                                    String color, String courierComment, String successWordOrderPlacing) {
+            super(browser);
             this.name = name;
             this.lastName = lastName ;
             this.address = address;
@@ -38,26 +38,24 @@ import PageObject.*;
         @Parameterized.Parameters
         public static Object[][] getData() {
             return new Object[][] {
-                    { "Иван","Иванов", "г.Нижний Новгород, пр. Мира, 4",
-                            "Черкизовская", "+79206981234", "25.02.2025", "двое суток",
-                            "black", "Красная дверь", "Заказ оформлен"},
-                    {"Екатерина", "Дмитриева", "г. Тверь, пл. Конституции, д. 294",
-                    "Комсомольская", "+79234568213", "30.04.2025", "сутки",
-                            "grey", "Вход со двора", "Заказ оформлен"}
+                    // Для Chrome
+                    {"chrome", "Иван", "Иванов", "г.Нижний Новгород, пр. Мира, 4", "Черкизовская", "+79206981234", "25.02.2025",
+                            "двое суток", "black", "Красная дверь", "Заказ оформлен"},
+                    {"chrome", "Екатерина", "Дмитриева", "г. Тверь, пл. Конституции, д. 294", "Комсомольская", "+79234568213",
+                            "30.04.2025", "сутки", "grey", "Вход со двора", "Заказ оформлен"},
+                    // Для Firefox
+                    {"firefox", "Иван", "Иванов", "г.Нижний Новгород, пр. Мира, 4", "Черкизовская", "+79206981234", "25.02.2025",
+                            "двое суток", "black", "Красная дверь", "Заказ оформлен"},
+                    {"firefox", "Екатерина", "Дмитриева", "г. Тверь, пл. Конституции, д. 294", "Комсомольская", "+79234568213",
+                            "30.04.2025", "сутки", "grey", "Вход со двора", "Заказ оформлен"}
             };
         }
         @Test
     public void checkPlacingOrderFirstButton() {
-        // создали драйвер для браузера Chrome
-        WebDriver driver = new ChromeDriver();
-        // перешли на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        // создаем объект главной страницы
-        MainPage objMainPage = new MainPage(driver);
         //вызывали метод ожидания загрузки главной страницы
-        objMainPage.waitForLoadHeader();
+        mainPage.open();
         // кликаем по первой кнопке "Заказать" в правом верхнем углу
-        objMainPage.clickFirstOrderButton();
+        mainPage.clickFirstOrderButton();
         // создаем объект первой страницы "Для кого самокат"
         ForWhomSamokat objForWhomSamokat = new ForWhomSamokat(driver);
         //ожидаем загрузку страницы:
@@ -91,8 +89,5 @@ import PageObject.*;
         CheckOrderStatus objCheckOrderStatus = new CheckOrderStatus(driver);
         // проверяем, что есть модальное окно с текстом "Заказ оформлен"
         objCheckOrderStatus.сheckOrderPlacing(successWordOrderPlacing);
-
-
-        driver.quit();
     }
     }

@@ -1,13 +1,13 @@
-package PageObject;
+package pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import static org.hamcrest.CoreMatchers.is;
-import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.CoreMatchers;
 
 // Главная страница
 public class MainPage {
@@ -22,11 +22,14 @@ public class MainPage {
     private By firstAnswerImportantQuestions = By.xpath(".//div[@id='accordion__panel-0']");
 
 
+
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
-    //Ожидаем загрузку главной страницы
-    public void waitForLoadHeader() {
+    //Открываем главную страницу и ожидаем загрузку главной страницы
+    public void open() {
+        driver.get("https://qa-scooter.praktikum-services.ru/");
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@class='Home_Header__iJKdX']")));
     }
@@ -53,7 +56,7 @@ public class MainPage {
        //Получаем текст из ответа на первый вопрос
        String actualText = driver.findElement(firstAnswerImportantQuestions).getText();
        //Сравниваем с ожидаемым результатом
-       MatcherAssert.assertThat(actualText, is(valueForCheck));
+       MatcherAssert.assertThat(actualText, CoreMatchers.is(valueForCheck));
    }
 
 }

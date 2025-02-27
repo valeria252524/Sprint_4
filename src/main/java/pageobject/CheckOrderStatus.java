@@ -1,12 +1,10 @@
-package PageObject;
+package pageobject;
+import org.hamcrest.CoreMatchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
 import org.hamcrest.MatcherAssert;
 
 // Класс для модального окна "Заказ оформлен"
@@ -26,7 +24,7 @@ public class CheckOrderStatus {
                 .until(ExpectedConditions.visibilityOfElementLocated(modalWindowOrderPlaced));
         //Получаем текст с модального окна, сравниваем с ожидаемым результатом
     String actualText = driver.findElement(modalWindowOrderPlaced).getText();
-      MatcherAssert.assertThat(actualText, containsString(successOrderPlacing));
+      MatcherAssert.assertThat(actualText, CoreMatchers.containsString(successOrderPlacing));
 
 }
 }
